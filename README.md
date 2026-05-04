@@ -1,6 +1,5 @@
 # Loom & Link: LDR Schedule Maker
-
-Loom & Link is a specialized scheduling application designed for long-distance couples to synchronize their lives across different timezones with a cute, interactive interface.
+Loom & Link is a scheduling app for long-distance couples to synchronize lives across timezones with a cute interface.
 
 ## Key Features
 - **Real-time Synchronization**: Instant updates across partner devices.
@@ -9,9 +8,7 @@ Loom & Link is a specialized scheduling application designed for long-distance c
 - **Interactive Scheduler**: Easy add/edit/delete functionality with 30-min intervals.
 
 ## Documentation
-For full technical details, architecture, and implementation guides, please refer to the:
-[Technical Documentation (LaTeX)](Documentation.txt)
+Refer to: [Technical Documentation (LaTeX)](Documentation.txt)
 
 ---
-**Developer**: Tompea Maria Daria (Babeș-Bolyai University)
-**Target Debut**: February 2027
+**Developer**: Tompea Maria Daria (UBB) | **Debut**: February 2027
