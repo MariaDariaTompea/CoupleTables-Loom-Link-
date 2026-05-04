@@ -1,0 +1,202 @@
+\documentclass[12pt,a4paper]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning,shadows}
+
+% --- CUSTOM COLORS ---
+\definecolor{softpink}{HTML}{FFB7B2}
+\definecolor{softblue}{HTML}{B2E2F2}
+\definecolor{softgreen}{HTML}{B2F2BB}
+\definecolor{glasswhite}{HTML}{FFFFFF}
+\definecolor{primary}{HTML}{FF6B6B}
+\definecolor{secondary}{HTML}{4ECDC4}
+\definecolor{accent}{HTML}{FFE66D}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{backcolour}{rgb}{0.98,0.98,0.98}
+
+% --- HEADER & FOOTER ---
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\textit{Loom \& Link: Technical Documentation}}
+\lhead{LDR Schedule Maker}
+\cfoot{\thepage}
+
+% --- CODE STYLE ---
+\lstdefinestyle{pythonstyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegray},
+    keywordstyle=\color{primary},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{secondary},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=pythonstyle}
+
+% --- TITLES STYLE ---
+\titleformat{\chapter}[display]
+  {\normalfont\bfseries\color{primary}}
+  {\filleft\Large\chapternamename\ \thechapter}
+  {1ex}
+  {\titlerule\vspace{1ex}\filleft\huge}
+
+\begin{document}
+
+% --- TITLE PAGE ---
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    {\Huge \bfseries \color{primary} Loom \& Link: \\ \Large A Real-time Synchronized Scheduler for \\ Long Distance Relationships \par}
+    \vspace{1.5cm}
+    {\Large \textbf{Technical Documentation \& Architecture Design} \par}
+    \vspace{2cm}
+    \begin{tikzpicture}
+        \node[draw, color=secondary, ultra thick, rounded corners=10pt, fill=softblue!10, inner sep=20pt] {
+            \Large \bfseries Syncing Hearts Across Timezones
+        };
+    \end{tikzpicture}
+    \vfill
+    {\large Prepared for: Babeș-Bolyai University Academic Review \par}
+    {\large Author: Tompea Maria Daria \par}
+    {\large Date: February 2027 \par}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% --- CHAPTER 1: INTRODUCTION ---
+\chapter{Introduction}
+\section{Project Vision}
+Maintaining a relationship across vast geographic distances introduces a unique set of challenges, primarily revolving around temporal coordination. ``Loom \& Link'' is a Python-based application designed to bridge this gap by providing a visual, interactive, and ``cute'' scheduling environment. Unlike generic calendar apps, Loom \& Link focuses on the emotional and visual connection between two partners.
+
+\section{Core Objectives}
+The primary goals of the system are:
+\begin{itemize}
+    \item \textbf{Real-time Sync}: Every action taken by one partner is instantly visible to the other.
+    \item \textbf{Transparent Localization}: Automated timezone conversion that renders the same event correctly on two different local grids.
+    \item \textbf{High Aesthetic Appeal}: Using modern UI principles to create a warm, inviting environment.
+    \item \textbf{Simplicity}: A code-based pairing system that eliminates complex email-based invites.
+\end{itemize}
+
+% --- CHAPTER 2: AESTHETICS & UI/UX ---
+\chapter{Design Philosophy}
+\section{The ``Cute'' Aesthetic}
+The application utilizes a \textbf{Glassmorphism} design language. This involves blurred background elements, semi-transparent panels, and soft shadows to create a sense of depth and warmth.
+
+\subsection{Color Palette}
+We have curated a 10-color pastel palette for event classification, ensuring that the schedule remains vibrant yet readable:
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{@{}lll@{}}
+        \toprule
+        \textbf{Color Name} & \textbf{HEX Code} & \textbf{Typical Activity} \\ \midrule
+        Strawberry & \#FFB7B2 & Date Night \\
+        Sky Blue & \#B2E2F2 & Online Gaming \\
+        Mint Green & \#B2F2BB & Studying Together \\
+        Lavender & \#D1B2F2 & Sleep/Wind Down \\
+        Lemon & \#FFF1B2 & Morning Call \\
+        \bottomrule
+    \end{tabular}
+    \caption{Subset of the 10-color palette logic.}
+\end{table}
+
+\section{Interface Layout}
+The main interface consists of a weekly grid. The Y-axis represents time in 30-minute increments, while the X-axis represents the days of the week. 
+
+% --- CHAPTER 3: TECHNICAL ARCHITECTURE ---
+\chapter{Technical Stack}
+\section{Frontend: Python with Flet}
+The application is built using \textbf{Flet}, a framework that enables the creation of Flutter apps using Python. This allows for a reactive UI that behaves like a native application on both desktop and mobile platforms.
+
+\section{Backend: Supabase Real-time}
+To facilitate the sharing of tables, \textbf{Supabase} is employed. It provides a PostgreSQL database with a real-time listener. When Partner A adds an event, the database emits a broadcast, which Partner B's client receives instantly.
+
+% --- CHAPTER 4: THE TIMEZONE ENGINE ---
+\chapter{Timezone Synchronization}
+\section{The UTC Standard}
+To handle users in different regions (e.g., Italy and USA), the application stores all timestamps in the database as \textbf{UTC+0}.
+
+\section{Conversion Algorithm}
+When the application fetches an event $E$ with a start time $T_{utc}$, it detects the user's local timezone $TZ_{local}$ and performs the following calculation:
+\begin{equation}
+    T_{local} = T_{utc} + \text{Offset}(TZ_{local}, T_{utc})
+\end{equation}
+
+\section{Day Boundary Logic}
+A unique requirement of Loom \& Link is handling events that span across different days for different users. 
+For example:
+\begin{itemize}
+    \item \textbf{Partner A (Rome, UTC+2)}: Adds a ``Movie Night'' on Sunday at 11:00 PM.
+    \item \textbf{Partner B (New York, UTC-4)}: The same event occurs at 5:00 PM on Sunday.
+\end{itemize}
+The engine ensures the event appears on the Sunday column for both. However, if the time difference shifts the event to a Monday for one partner, the app intelligently renders it in the Monday column of the *viewer's* local week.
+
+% --- CHAPTER 5: CORE MODULES ---
+\chapter{Application Modules}
+\section{Authentication \& Pairing}
+The login system uses a simple alphanumeric code ($6 \le \text{length} \le 15$). 
+\begin{lstlisting}[language=Python]
+def validate_code(code):
+    if 6 <= len(code) <= 15:
+        return True
+    return False
+\end{lstlisting}
+Once logged in, a user can enter their partner's code to establish a bidirectional link in the \texttt{couples} table.
+
+\section{Event Management}
+The event popup allows users to input:
+\begin{itemize}
+    \item Activity Name (e.g., ``Dinner Date'').
+    \item Description (e.g., ``Eating sushi while on FaceTime'').
+    \item Color Selection (One of 10 presets).
+    \item Start and End Time (converted to UTC before saving).
+\end{itemize}
+
+% --- CHAPTER 6: DATA MODELING ---
+\chapter{Database Schema}
+\section{Entity Definitions}
+\subsection{User Table}
+Stores \texttt{user\_id}, \texttt{secret\_code}, and \texttt{region}.
+\subsection{Event Table}
+Stores \texttt{id}, \texttt{couple\_id}, \texttt{title}, \texttt{desc}, \texttt{start\_time}, \texttt{end\_time}, and \texttt{color\_index}.
+
+% --- CHAPTER 7: IMPLEMENTATION ---
+\chapter{Implementation Code}
+\section{The Table Component}
+\begin{lstlisting}[language=Python]
+class ScheduleTable(ft.UserControl):
+    def build(self):
+        # Create 7 columns for the week
+        # Populated with local-converted events
+        pass
+\end{lstlisting}
+
+\section{Weekly Reset Logic}
+At the start of each week (Monday 00:00 UTC), the application triggers a routine to archive the previous week's events and provide an empty table, as per user requirements.
+
+% --- CHAPTER 8: CONCLUSION ---
+\chapter{Conclusion}
+Loom \& Link provides a robust, aesthetically pleasing solution for long-distance coordination. By abstracting the complexities of timezone mathematics and offering a shared, colorful environment, it fosters closer connection through organized quality time.
+
+\end{document}
