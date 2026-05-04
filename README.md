@@ -8,7 +8,8 @@ Loom & Link is a scheduling app for long-distance couples to synchronize lives a
 - **Interactive Scheduler**: Easy add/edit/delete functionality with 30-min intervals.
 
 ## Documentation
-Refer to: [Technical Documentation (LaTeX)](Documentation.txt)
+- [Technical Documentation (LaTeX Source)](Documentation.txt)
+- [Project Documentation (PDF Version)](Tables.pdf)
 
 ---
 **Developer**: Tompea Maria Daria (UBB) | **Debut**: February 2027
