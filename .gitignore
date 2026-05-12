@@ -1,0 +1,6 @@
+.env
+__pycache__/
+setup_tables.py
+setup_tables_ip.py
+check_db.py
+*.pyc
