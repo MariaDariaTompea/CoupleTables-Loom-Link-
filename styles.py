@@ -20,9 +20,9 @@ ACCENT = "#FFE66D"
 
 # --- GLASSMORPHISM STYLES ---
 GLASS_STYLE = {
-    "bgcolor": ft.colors.with_opacity(0.1, ft.colors.WHITE),
+    "bgcolor": ft.Colors.with_opacity(0.1, ft.Colors.WHITE),
     "border_radius": 15,
-    "border": ft.border.all(1, ft.colors.with_opacity(0.2, ft.colors.WHITE)),
+    "border": ft.Border.all(1, ft.Colors.with_opacity(0.2, ft.Colors.WHITE)),
     "blur": ft.Blur(10, 10, ft.BlurStyle.OUTER),
     "padding": 20,
 }

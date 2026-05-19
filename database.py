@@ -17,17 +17,92 @@ class Database:
     
     def validate_code(self, code):
         """As per documentation: length between 6 and 15"""
-        return 6 <= len(code) <= 15
+        return 5 <= len(code) <= 15
 
     def login_user(self, code):
+        if not self.client: 
+            print("DB Error: Client not initialized")
+            return None
+        print(f"DB: Checking for user with code: {code}")
+        try:
+            res = self.client.table("users").select("*").eq("secret_code", code).execute()
+            if res.data:
+                print(f"DB: Found existing user: {res.data[0]['id']}")
+                return res.data[0]
+            else:
+                print("DB: User not found.")
+                return None
+        except Exception as e:
+            print(f"DB Error in login_user: {e}")
+            raise e
+
+    def create_user(self, name, code):
         if not self.client: return None
-        # Check if user exists, or create new
-        res = self.client.table("users").select("*").eq("secret_code", code).execute()
-        if res.data:
-            return res.data[0]
-        else:
-            new_user = self.client.table("users").insert({"secret_code": code, "region": "UTC"}).execute()
-            return new_user.data[0]
+        try:
+            print(f"DB: Creating new user: {name}")
+            new_user = self.client.table("users").insert({"name": name, "secret_code": code, "region": "UTC"}).execute()
+            if new_user.data:
+                return new_user.data[0]
+            return None
+        except Exception as e:
+            print(f"DB Error in create_user: {e}")
+            raise e
+
+    def generate_pairing_code(self, user_id):
+        if not self.client: return None
+        import string
+        import random
+        from datetime import datetime, timedelta, timezone
+        
+        # Generate 20 char code
+        code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=20))
+        expires_at = (datetime.now(timezone.utc) + timedelta(minutes=5)).isoformat()
+        
+        try:
+            # Delete old codes for this user
+            self.client.table("pairing_codes").delete().eq("user_id", user_id).execute()
+            # Insert new code
+            self.client.table("pairing_codes").insert({
+                "user_id": user_id,
+                "code": code,
+                "expires_at": expires_at
+            }).execute()
+            return code
+        except Exception as e:
+            print(f"DB Error in generate_pairing_code: {e}")
+            return None
+
+    def pair_with_code(self, user_id, pairing_code):
+        if not self.client: return None
+        from datetime import datetime, timezone
+        
+        try:
+            # Find the code and ensure it hasn't expired
+            res = self.client.table("pairing_codes").select("*").eq("code", pairing_code).execute()
+            if not res.data:
+                print("DB: Pairing code not found.")
+                return False
+            
+            pairing_data = res.data[0]
+            expires_at = datetime.fromisoformat(pairing_data['expires_at'].replace('Z', '+00:00'))
+            
+            if datetime.now(timezone.utc) > expires_at:
+                print("DB: Pairing code expired.")
+                return False
+            
+            partner_id = pairing_data['user_id']
+            if partner_id == user_id:
+                print("DB: Cannot pair with yourself.")
+                return False
+
+            # Create the couple link
+            self.client.table("couples").insert({"user1_id": partner_id, "user2_id": user_id}).execute()
+            # Delete the used code
+            self.client.table("pairing_codes").delete().eq("code", pairing_code).execute()
+            return True
+        except Exception as e:
+            print(f"DB Error in pair_with_code: {e}")
+            return False
 
     def pair_partner(self, user_id, partner_code):
         if not self.client: return None
