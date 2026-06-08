@@ -22,16 +22,19 @@ def to_utc_str(dt, local_tz_name="UTC"):
     utc_dt = dt.astimezone(pytz.utc)
     return utc_dt.isoformat()
 
-def get_week_days(start_date=None):
+def get_week_days(local_tz_name="UTC"):
     """
-    Returns a list of dates for the current week (starting Monday).
+    Returns a list of dates (as timezone-aware datetimes at midnight local time)
+    for the current week (starting Monday) in the specified local timezone.
     """
-    if start_date is None:
-        start_date = datetime.now()
-    
-    # Monday is 0
-    monday = start_date - timedelta(days=start_date.weekday())
-    return [monday + timedelta(days=i) for i in range(7)]
+    tz = pytz.timezone(local_tz_name)
+    now_local = datetime.now(tz)
+    monday = now_local - timedelta(days=now_local.weekday())
+    # Create naive midnight datetime
+    naive_midnight = datetime(monday.year, monday.month, monday.day)
+    # Localize using pytz
+    monday_midnight = tz.localize(naive_midnight)
+    return [monday_midnight + timedelta(days=i) for i in range(7)]
 
 def format_time(dt):
     return dt.strftime("%H:%M")
