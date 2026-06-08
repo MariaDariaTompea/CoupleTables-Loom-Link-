@@ -95,6 +95,18 @@ This is how a larger event spanning multiple blocks looks on the weekly schedule
 
 ---
 
+## 📅 July Update (Roadmap & Planned Enhancements)
+*The following features and quality-of-life enhancements are planned for the upcoming July release to deliver an even cleaner and more seamless experience:*
+
+- ✨ **Polished App Aesthetics**: Further visual enhancements to the glassmorphic pastel interface, including custom transitions and smoother loading states.
+- 🔗 **Connected Time Blocks**: Longer events spanning multiple 30-minute intervals will be displayed as a single, connected block. The title will render once at the top of the block, removing duplicate text across individual slots.
+- 💬 **Interactive Event Tooltips**: Hovering over any scheduled event will trigger a clean details popup showing the full title, category, and description.
+- ✏️ **Smart Conflict Prevention**: Selecting an occupied time slot will open the **Edit Event** dialog directly, rather than trying to overlay/add a new event on top.
+- 🌍 **Global Timezone Coverage**: Expanding the region list to include approximately 15 major states and cities per continent, ensuring easy localization for couples worldwide.
+- 🎯 **User-Friendly Table Improvements**: General table navigation upgrades, including click-and-drag block selection and visual guidelines.
+
+---
+
 ## 📂 Documentation & Resources
 - **LaTeX Source Code**: [`Documentation.txt`](file:///d:/LOOM/Documentation.txt)
 - **PDF Version**: [`Tables.pdf`](file:///d:/LOOM/Tables.pdf)
