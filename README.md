@@ -58,27 +58,32 @@ Follow these steps to synchronize your calendar with your partner:
 2. Log in or sign up with a unique username and password.
 3. Select your local timezone region (e.g., `Europe/Rome` for you, `America/New_York` or `Asia/Tokyo` for your partner).
 
-![Login Screen](photos/app_login.png)
+![Login Screen](photos/LOGIN.png)
+![Signup Screen](photos/SIGNUP.png)
 
 ### 2. Pairing with Your Partner
-1. Click **Pair with Partner** in the main dashboard.
+1. Click **Connect** in the top right menu of the main dashboard.
 2. A unique pairing code will be generated (e.g., `A7X92K`) and a 5-minute countdown will begin.
+
+![Connect Instructions Dialog](photos/CONNECTINSTRUCTIONS.png)
+
 3. Copy the code and send it to your partner.
-4. Your partner simply pastes this code into their **Input Partner Code** field and clicks **Submit**.
+4. Your partner simply pastes this code into their **Partner's Code** field and clicks **Connect**.
 
-![Pairing Code Dialog](photos/pairing_dialog.png)
+![Both Accounts Open (No Bond)](photos/BOTHACCOUNTSAREOPENWITHNOBOND.png)
 
-5. Once matched, the animated **Kitsune Chibi** mascot will celebrate, and the shared scheduler will open automatically.
+5. Once matched, the animated **Kitsune Chibi** mascot will celebrate, and the shared scheduler will open automatically. Your partner's name will appear under **Bonds** in the left panel.
 
-![Pairing Success](photos/chibi_success.png)
+![Connected Bond Screen](photos/BOND.png)
 
 ### 3. Adding and Synchronizing Events
 1. Click the **Add Event** button or click on any empty time slot.
 2. Enter the title (e.g., *FaceTime Date*), description, color code, and select the start/end times.
+
+![Add Event Dialog](photos/ADDPASSWORD.png)
+
 3. Click **Save Event**. 
 4. The event will instantly display on both of your screens, adjusted automatically to each viewer's local hour.
-
-![Main Schedule Grid](photos/app_main.png)
 
 ---
 
