@@ -49,15 +49,18 @@ class LoomLinkApp:
 
     def copy_to_clipboard(self, text):
         async def do_copy():
-            clip = ft.Clipboard()
-            self.page.overlay.append(clip)
-            self.page.update()
-            await clip.set(text)
-            self.page.overlay.remove(clip)
-            self.page.update()
+            try:
+                clip = ft.Clipboard()
+                self.page.overlay.append(clip)
+                self.page.update()
+                await clip.set(text)
+                self.page.overlay.remove(clip)
+                self.page.update()
+                self.show_snack("Pairing code copied to clipboard! ♥")
+            except Exception:
+                self.show_snack("Clipboard copy failed. Please copy manually (Ctrl+C).", is_error=True)
             
         self.page.run_task(do_copy)
-        self.show_snack("Pairing code copied to clipboard!")
 
     # --- LOGIN & SIGNUP VIEWS ---
     def show_login_screen(self):
@@ -985,6 +988,8 @@ class LoomLinkApp:
             bgcolor=styles.ACCENT,
             border_radius=10,
             border=ft.Border.all(1.5, "#FF9EB5"),
+            on_click=lambda _: self.copy_to_clipboard(pairing_code),
+            tooltip="Click to copy code"
         )
         
         partner_code_input = ft.TextField(
@@ -1007,7 +1012,7 @@ class LoomLinkApp:
             ft.Row([progress_ring, timer_text], alignment=ft.MainAxisAlignment.CENTER, spacing=15),
             ft.Text("Your Pairing Code:", color=styles.TEXT_DARK, size=11, weight=ft.FontWeight.BOLD),
             code_display,
-            ft.Text("Select and copy the code to send to your partner.", size=10, color="#8B5F6C"),
+            ft.Text("Click the code to copy, or select and copy it manually.", size=10, color="#8B5F6C"),
             ft.Divider(height=10, color=ft.Colors.TRANSPARENT),
             ft.Text("Input your friend's or partner's code to connect.", size=11, color=styles.TEXT_DARK, weight=ft.FontWeight.BOLD),
             partner_code_input,
