@@ -77,13 +77,21 @@ Follow these steps to synchronize your calendar with your partner:
 ![Connected Bond Screen](photos/BOND.png)
 
 ### 3. Adding and Synchronizing Events
-1. Click the **Add Event** button or click on any empty time slot.
-2. Enter the title (e.g., *FaceTime Date*), description, color code, and select the start/end times.
 
-![Add Event Dialog](photos/ADDPASSWORD.png)
+#### Option A: Adding a Small Event (One 30-Minute Block)
+If you click directly on any time slot in the grid, you can add one square worth of an event:
+![Add Event (One Block)](photos/ADD%20EVENT%20ONE%20BLOCK.png)
 
-3. Click **Save Event**. 
-4. The event will instantly display on both of your screens, adjusted automatically to each viewer's local hour.
+This is how that 30-minute event is displayed in real-time for both users:
+![One Block Event Display](photos/ONEBLOCKEVENTTABLE.png)
+
+#### Option B: Adding a Long Event (Multiple Time Blocks)
+If you click the **+ Add Event** button in the dashboard, you can define longer events that span multiple squares:
+![Add Time Period Block](photos/ADD%20TIME%20PERIOD%20BLOCK.png)
+
+This is how a larger event spanning multiple blocks looks on the weekly schedule:
+![Period Block Event Display](photos/PERIODBLOCK%20TABLE.png)
+
 
 ---
 
