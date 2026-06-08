@@ -191,7 +191,7 @@ class Database:
         print(f"DB: Updating profile for user {user_id}")
         
         # Supabase mode
-        if self.client:
+        if self.client and not isinstance(user_id, int):
             try:
                 self.client.table("users").update({
                     "name": name,
@@ -220,7 +220,7 @@ class Database:
         expires_at = (datetime.now(timezone.utc) + timedelta(minutes=5)).isoformat()
         
         # Supabase mode
-        if self.client:
+        if self.client and not isinstance(user_id, int):
             try:
                 self.client.table("pairing_codes").delete().eq("user_id", user_id).execute()
                 self.client.table("pairing_codes").insert({
@@ -255,7 +255,7 @@ class Database:
         now_str = datetime.now(timezone.utc).isoformat()
         
         # Supabase mode
-        if self.client:
+        if self.client and not isinstance(user_id, int):
             try:
                 # 1. Verify partner_code is active and get partner's user ID
                 res = self.client.table("pairing_codes").select("*").eq("code", partner_code).execute()
@@ -371,7 +371,7 @@ class Database:
 
     def get_couple_id(self, user_id):
         """Get the couple/bond ID between user_id and their partner"""
-        if self.client:
+        if self.client and not isinstance(user_id, int):
             try:
                 res = self.client.table("couples").select("id").or_(f"user1_id.eq.{user_id},user2_id.eq.{user_id}").execute()
                 return res.data[0]['id'] if res.data else None
@@ -387,7 +387,7 @@ class Database:
 
     def fetch_user_bonds(self, user_id):
         """Retrieve all bonds (couples) for a user along with partner details"""
-        if self.client:
+        if self.client and not isinstance(user_id, int):
             try:
                 # In Supabase we try to fetch couples
                 res = self.client.table("couples").select("id, user1_id, user2_id").or_(f"user1_id.eq.{user_id},user2_id.eq.{user_id}").execute()
@@ -423,7 +423,7 @@ class Database:
 
     def fetch_bond_events(self, couple_id):
         """Fetch all events for a specific couple ID"""
-        if self.client:
+        if self.client and not isinstance(couple_id, int):
             try:
                 res = self.client.table("events").select("*").eq("couple_id", couple_id).execute()
                 # Map 'description' to 'desc' for code consistency
@@ -448,7 +448,7 @@ class Database:
     def add_event(self, couple_id, title, desc, start_time, end_time, color_index):
         """Insert a new schedule event into the database"""
         print(f"DEBUG: add_event called: couple_id={couple_id}, title={title}, start_time={start_time}, end_time={end_time}, color_index={color_index}, client_exists={self.client is not None}", flush=True)
-        if self.client:
+        if self.client and not isinstance(couple_id, int):
             try:
                 data = {
                     "couple_id": couple_id,
